@@ -35,8 +35,16 @@ class V2 {
 		return this;
 	}
 	function set(v:V2): V2 {this.set(v.x, v.y); return this;}
-	function set(v:number[]) : V2 {this.set(v); return this;}
-	function set(v:Float32Array) : V2 {this.set(v); return this;}
+	function set(v:number[]) : V2 {
+		assert(v.length == 2);
+		this.set(v[0], v[1]);
+		return this;
+	}
+	function set(v:Float32Array) : V2 {
+		assert(v.length == 2);
+		this.set(v[0], v[1]);
+		return this;
+	}
 
 	function equals(v:V2) : boolean {
 		return this.equals(v, MVQ.EQUAL_EPSILON);
