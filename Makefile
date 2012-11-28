@@ -1,5 +1,6 @@
-mvq.js : mvq.jsx
-	jsx --executable node --output mvq.js mvq.jsx
-	node mvq.js
+mvq.jsx.js : lib/mvq.jsx
+	jsx --executable node --output $@ $<
+	node $@
 
-
+test:
+	prove
