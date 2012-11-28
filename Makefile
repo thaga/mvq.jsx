@@ -4,3 +4,6 @@ mvq.jsx.js : lib/mvq.jsx
 
 test:
 	prove
+
+test-optimized:
+	JSX_OPTS=--release prove
