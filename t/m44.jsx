@@ -1,26 +1,13 @@
 // tests are borrowed from Google Closure Library
 // https://developers.google.com/closure/library/
 
-import "test-case.jsx";
 import "js/web.jsx";
 
 import "../lib/mvq.jsx";
 
+import "./lib/test-mvq.jsx";
 
-class _Test extends TestCase {
-
-    function assertEquals(expect : number[], got : M44) : void {
-        var status = got.equals(new M44(expect));
-        if (!status) {
-            this.diag(got.toString());
-            this.diag(new M44(expect).toString());
-        }
-        this.expect(status).toBe(true);
-    }
-
-    function assertEquals(expect : number, got : number) : void {
-        this.expect(got).toBe(expect);
-    }
+class _Test extends TestMVQ.<M44> {
 
     function testConstructor() : void {
         var m0 = new M44();
