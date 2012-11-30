@@ -9,7 +9,7 @@ class V2 {
 	var x = 0;
 	var y = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y];}
 
 	// constructors
@@ -22,8 +22,8 @@ class V2 {
 	// dim conversion
 	function constructor(v:V3) {this.set(v.x, v.y);}
 	function constructor(v:V4) {this.set(v.x, v.y);}
-	function v3(z:number) : V3 {return new V3(this, z);}
-	function v4(z:number, w:number) : V4 {return new V4(this, z, w);}
+	function V3(z:number) : V3 {return new V3(this, z);}
+	function V4(z:number, w:number) : V4 {return new V4(this, z, w);}
 	function set(v:V3): V2 {return this.set(v.x, v.y);}
 	function set(v:V4): V2 {return this.set(v.x, v.y);}
 
@@ -65,7 +65,7 @@ class V2 {
 	function sub(v:number[]) : V2 {return this.sub(v[0], v[1]);}
 	function sub(v:Float32Array) : V2 {return this.sub(v[0], v[1]);}
 
-	//  this = this * v
+	// this = this * v (for each element)
 	function mul(x:number, y:number) : V2 {
 		this.x *= x; this.y *= y;
 		return this;
@@ -129,7 +129,7 @@ class V2 {
 		return x * x + y * y;
 	}
 
-	// this = lerp(v0, v1, ratio)
+	// this = (1 - ratio) * v0 + ratio *  v1
 	function lerp(v0:V2, v1:V2, ratio:number) : V2 {
 		this.x = v0.x + ratio * (v1.x - v0.x);
 		this.y = v0.y + ratio * (v1.y - v0.y);
@@ -159,7 +159,7 @@ class V3 {
 	var y = 0;
 	var z = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y, this.z];}
 
 	// constructors
@@ -172,8 +172,8 @@ class V3 {
 	// dim conversion
 	function constructor(v:V2, z:number) {this.set(v, z);}
 	function constructor(v:V4) {this.set(v);}
-	function v2() : V2 {return new V2(this);}
-	function v4(w:number) : V4 {return new V4(this, w);}
+	function V2() : V2 {return new V2(this);}
+	function V4(w:number) : V4 {return new V4(this, w);}
 	function set(v:V2, z:number): V3 {return this.set(v.x, v.y, z);}
 	function set(v:V4): V3 {return this.set(v.x, v.y, v.z);}
 
@@ -198,6 +198,7 @@ class V3 {
 			Math.abs(v.z - this.z) < eps;
 	}
 
+	// this = this + v
 	function add(x:number, y:number, z:number) : V3 {
 		this.x += x; this.y += y; this.z += z;
 		return this;
@@ -206,6 +207,7 @@ class V3 {
 	function add(v:number[]) : V3 {return this.add(v[0], v[1], v[2]);}
 	function add(v:Float32Array) : V3 {return this.add(v[0], v[1], v[2]);}
 
+	// this = this - v
 	function sub(x:number, y:number, z:number) : V3 {
 		this.x -= x; this.y -= y; this.z -= z;
 		return this;
@@ -214,6 +216,7 @@ class V3 {
 	function sub(v:number[]) : V3 {return this.sub(v[0], v[1], v[2]);}
 	function sub(v:Float32Array) : V3 {return this.sub(v[0], v[1], v[2]);}
 
+	// this = this * v (for each element)
 	function mul(x:number, y:number, z:number) : V3 {
 		this.x *= x; this.y *= y; this.z *= z;
 		return this;
@@ -222,6 +225,7 @@ class V3 {
 	function mul(v:number[]) : V3 {return this.mul(v[0], v[1], v[2]);}
 	function mul(v:Float32Array) : V3 {return this.mul(v[0], v[1], v[2]);}
 
+	// this = this * s
 	function mul(s:number) : V3 {
 		this.x *= s;
 		this.y *= s;
@@ -229,10 +233,12 @@ class V3 {
 		return this;
 	}
 
+	// this = -this
 	function neg() : V3 {
 		return this.mul(-1);
 	}
 
+	// this = normalize(this)
 	function normalize() : V3 {
 		var l = this.len();
 		if (l > 0) {
@@ -242,6 +248,7 @@ class V3 {
 		}
 	}
 
+	// this = v0 x v1
 	function cross(v0:V3, v1:V3) : V3 {
 		var x0 = v0.x, y0 = v0.y, z0 = v0.z;
 		var x1 = v1.x, y1 = v1.y, z1 = v1.z;
@@ -251,23 +258,28 @@ class V3 {
 		return this;
 	}
 
+	// return this . v
 	function dot(v:V3) : number {
 	    return this.x * v.x + this.y * v.y + this.z * v.z;
 	}
 
+	// return len(this)
 	function len() : number {
 		return Math.sqrt(this.len2());
 	}
 
+	// return len(this)^2
 	function len2() : number {
 		var x = this.x, y = this.y, z = this.z;
 		return x * x + y * y + z * z;
 	}
 
+	// return len(this - v)
 	function dist(v:V3) : number {
 		return Math.sqrt(this.dist2(v));
 	}
 
+	// return len(this - v)^2
 	function dist2(v:V3) : number {
 		var x = v.x - this.x;
 		var y = v.y - this.y;
@@ -275,6 +287,7 @@ class V3 {
 		return x * x + y * y + z * z;
 	}
 
+	// this = (1 - ratio) * v0 + ratio *  v1
 	function lerp(v0:V3, v1:V3, ratio:number) : V3 {
 		this.x = v0.x + ratio * (v1.x - v0.x);
 		this.y = v0.y + ratio * (v1.y - v0.y);
@@ -282,6 +295,7 @@ class V3 {
 		return this;
 	}
 
+	// this = m * this
 	function transformBy(m:M33) : V3 {
 		var x = this.x, y = this.y, z = this.z;
 		this.x = m.m11 * x + m.m12 * y + m.m13 * z;
@@ -289,6 +303,8 @@ class V3 {
 		this.z = m.m31 * x + m.m32 * y + m.m33 * z;
 		return this;
 	}
+
+	// this = m * this (affine transform)
 	function transformBy(m:M44) : V3 {
 		var x = this.x, y = this.y, z = this.z;
 		this.x = m.m11 * x + m.m12 * y + m.m13 * z + m.m14;
@@ -305,7 +321,7 @@ class V4 {
 	var z = 0;
 	var w = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y, this.z, this.w];}
 
 	// constructors
@@ -318,8 +334,8 @@ class V4 {
 	// dim conversion
 	function constructor(v:V2, z:number, w:number) {this.set(v, z, w);}
 	function constructor(v:V3, w:number) {this.set(v, w);}
-	function v2() : V2 {return new V2(this);}
-	function v3() : V3 {return new V3(this);}
+	function V2() : V2 {return new V2(this);}
+	function V3() : V3 {return new V3(this);}
 	function set(v:V2, z:number, w:number): V4 {return this.set(v.x, v.y, z, w);}
 	function set(v:V3, w:number): V4 {return this.set(v.x, v.y, v.z, w);}
 
@@ -345,6 +361,7 @@ class V4 {
 			Math.abs(v.w - this.w) < eps;
 	}
 
+	// this = this + v
 	function add(x:number, y:number, z:number, w:number) : V4 {
 		this.x += x; this.y += y; this.z += z; this.w += w;
 		return this;
@@ -353,6 +370,7 @@ class V4 {
 	function add(v:number[]) : V4 {return this.add(v[0], v[1], v[2], v[3]);}
 	function add(v:Float32Array) : V4 {return this.add(v[0], v[1], v[2], v[3]);}
 
+	// this = this - v
 	function sub(x:number, y:number, z:number, w:number) : V4 {
 		this.x -= x; this.y -= y; this.z -= z; this.w -= w;
 		return this;
@@ -361,6 +379,7 @@ class V4 {
 	function sub(v:number[]) : V4 {return this.sub(v[0], v[1], v[2], v[3]);}
 	function sub(v:Float32Array) : V4 {return this.sub(v[0], v[1], v[2], v[3]);}
 
+	// this = this * v (for each element)
 	function mul(x:number, y:number, z:number, w:number) : V4 {
 		this.x *= x; this.y *= y; this.z *= z; this.w *= w;
 		return this;
@@ -369,6 +388,7 @@ class V4 {
 	function mul(v:number[]) : V4 {return this.mul(v[0], v[1], v[2], v[3]);}
 	function mul(v:Float32Array) : V4 {return this.mul(v[0], v[1], v[2], v[3]);}
 
+	// this = this * s
 	function mul(s:number) : V4 {
 		this.x *= s;
 		this.y *= s;
