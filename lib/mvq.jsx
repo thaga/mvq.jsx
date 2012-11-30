@@ -35,8 +35,16 @@ class V2 {
 		return this;
 	}
 	function set(v:V2): V2 {this.set(v.x, v.y); return this;}
-	function set(v:number[]) : V2 {this.set(v); return this;}
-	function set(v:Float32Array) : V2 {this.set(v); return this;}
+	function set(v:number[]) : V2 {
+		assert(v.length == 2);
+		this.set(v[0], v[1]);
+		return this;
+	}
+	function set(v:Float32Array) : V2 {
+		assert(v.length == 2);
+		this.set(v[0], v[1]);
+		return this;
+	}
 
 	function equals(v:V2) : boolean {
 		return this.equals(v, MVQ.EQUAL_EPSILON);
@@ -150,6 +158,10 @@ class V2 {
 		this.x = m.m11 * x + m.m12 * y + m.m13;
 		this.y = m.m21 * x + m.m22 * y + m.m23;
 		return this;
+	}
+
+	override function toString() : string {
+		return "V2" + JSON.stringify(this.array());
 	}
 }
 
@@ -312,6 +324,10 @@ class V3 {
 		this.z = m.m31 * x + m.m32 * y + m.m33 * z + m.m34;
 		return this;
 	}
+
+	override function toString() : string {
+		return "V3" + JSON.stringify(this.array());
+	}
 }
 
 class V4 {
@@ -450,6 +466,10 @@ class V4 {
 		this.z = m.m31 * x + m.m32 * y + m.m33 * z + m.m34 * w;
 		this.w = m.m41 * x + m.m42 * y + m.m43 * z + m.m44 * w;
 		return this;
+	}
+
+	override function toString() : string {
+		return "V4" + JSON.stringify(this.array());
 	}
 }
 
@@ -603,6 +623,10 @@ class M22 {
 		this.m12 = -s;
 		this.m22 = c;
 		return this;
+	}
+
+	override function toString() : string {
+		return "M22" + JSON.stringify(this.array());
 	}
 }
 
@@ -770,11 +794,11 @@ class M33 {
 		var d = this.det();
 		if (d == 0) return null;
 		var invDet = 1 / d;
-		
+
 		var m11 = this.m11, m21 = this.m21, m31 = this.m31;
 		var m12 = this.m12, m22 = this.m22, m32 = this.m32;
 		var m13 = this.m13, m23 = this.m23, m33 = this.m33;
-		
+
 		this.m11 = invDet * (m22 * m33 - m23 * m32);
 		this.m21 = invDet * (m23 * m31 - m21 * m33);
 		this.m31 = invDet * (m21 * m32 - m22 * m31);
@@ -827,6 +851,10 @@ class M33 {
 	function setRotateX(rad:number) :M33 {return this.setRotate(rad, 1,0,0);}
 	function setRotateY(rad:number) :M33 {return this.setRotate(rad, 0,1,0);}
 	function setRotateZ(rad:number) :M33 {return this.setRotate(rad, 0,0,1);}
+
+	override function toString() : string {
+		return "M33" + JSON.stringify(this.array());
+	}
 }
 
 class M44 {
@@ -1069,22 +1097,22 @@ class M44 {
 
 		var invDet = 1 / d;
 
-		this.m11 = (m22 * b11 - m32 * b10 + m42 * b09) * invDet;
+		this.m11 = ( m22 * b11 - m32 * b10 + m42 * b09) * invDet;
 		this.m21 = (-m21 * b11 + m31 * b10 - m41 * b09) * invDet;
-		this.m31 = (m24 * b05 - m34 * b04 + m44 * b03) * invDet;
+		this.m31 = ( m24 * b05 - m34 * b04 + m44 * b03) * invDet;
 		this.m41 = (-m23 * b05 + m33 * b04 - m43 * b03) * invDet;
 		this.m12 = (-m12 * b11 + m32 * b08 - m42 * b07) * invDet;
-		this.m22 = (m11 * b11 - m31 * b08 + m41 * b07) * invDet;
+		this.m22 = ( m11 * b11 - m31 * b08 + m41 * b07) * invDet;
 		this.m32 = (-m14 * b05 + m34 * b02 - m44 * b01) * invDet;
-		this.m42 = (m13 * b05 - m33 * b02 + m43 * b01) * invDet;
-		this.m13 = (m12 * b10 - m22 * b08 + m42 * b06) * invDet;
+		this.m42 = ( m13 * b05 - m33 * b02 + m43 * b01) * invDet;
+		this.m13 = ( m12 * b10 - m22 * b08 + m42 * b06) * invDet;
 		this.m23 = (-m11 * b10 + m21 * b08 - m41 * b06) * invDet;
-		this.m33 = (m14 * b04 - m24 * b02 + m44 * b00) * invDet;
+		this.m33 = ( m14 * b04 - m24 * b02 + m44 * b00) * invDet;
 		this.m43 = (-m13 * b04 + m23 * b02 - m43 * b00) * invDet;
 		this.m14 = (-m12 * b09 + m22 * b07 - m32 * b06) * invDet;
-		this.m24 = (m11 * b09 - m21 * b07 + m31 * b06) * invDet;
+		this.m24 = ( m11 * b09 - m21 * b07 + m31 * b06) * invDet;
 		this.m34 = (-m14 * b03 + m24 * b01 - m34 * b00) * invDet;
-		this.m44 = (m13 * b03 - m23 * b01 + m33 * b00) * invDet;
+		this.m44 = ( m13 * b03 - m23 * b01 + m33 * b00) * invDet;
 
 		return this;
 	}
@@ -1172,6 +1200,9 @@ class M44 {
 		return this;
 	}
 
+	override function toString() : string {
+		return "M44" + JSON.stringify(this.array());
+	}
 }
 
 class Quat {
@@ -1327,6 +1358,10 @@ class Quat {
 		this.z = (az * ratioA + bz * ratioB);
 
 		return this;
+	}
+
+	override function toString() : string {
+		return "Quat" + JSON.stringify(this.array());
 	}
 }
 
