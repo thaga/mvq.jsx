@@ -9,7 +9,7 @@ class V2 {
 	var x = 0;
 	var y = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y];}
 
 	// constructors
@@ -22,8 +22,8 @@ class V2 {
 	// dim conversion
 	function constructor(v:V3) {this.set(v.x, v.y);}
 	function constructor(v:V4) {this.set(v.x, v.y);}
-	function v3(z:number) : V3 {return new V3(this, z);}
-	function v4(z:number, w:number) : V4 {return new V4(this, z, w);}
+	function V3(z:number) : V3 {return new V3(this, z);}
+	function V4(z:number, w:number) : V4 {return new V4(this, z, w);}
 	function set(v:V3): V2 {return this.set(v.x, v.y);}
 	function set(v:V4): V2 {return this.set(v.x, v.y);}
 
@@ -73,7 +73,7 @@ class V2 {
 	function sub(v:number[]) : V2 {return this.sub(v[0], v[1]);}
 	function sub(v:Float32Array) : V2 {return this.sub(v[0], v[1]);}
 
-	//  this = this * v
+	// this = this * v (for each element)
 	function mul(x:number, y:number) : V2 {
 		this.x *= x; this.y *= y;
 		return this;
@@ -137,7 +137,7 @@ class V2 {
 		return x * x + y * y;
 	}
 
-	// this = lerp(v0, v1, ratio)
+	// this = (1 - ratio) * v0 + ratio *  v1
 	function lerp(v0:V2, v1:V2, ratio:number) : V2 {
 		this.x = v0.x + ratio * (v1.x - v0.x);
 		this.y = v0.y + ratio * (v1.y - v0.y);
@@ -171,7 +171,7 @@ class V3 {
 	var y = 0;
 	var z = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y, this.z];}
 
 	// constructors
@@ -184,8 +184,8 @@ class V3 {
 	// dim conversion
 	function constructor(v:V2, z:number) {this.set(v, z);}
 	function constructor(v:V4) {this.set(v);}
-	function v2() : V2 {return new V2(this);}
-	function v4(w:number) : V4 {return new V4(this, w);}
+	function V2() : V2 {return new V2(this);}
+	function V4(w:number) : V4 {return new V4(this, w);}
 	function set(v:V2, z:number): V3 {return this.set(v.x, v.y, z);}
 	function set(v:V4): V3 {return this.set(v.x, v.y, v.z);}
 
@@ -210,6 +210,7 @@ class V3 {
 			Math.abs(v.z - this.z) < eps;
 	}
 
+	// this = this + v
 	function add(x:number, y:number, z:number) : V3 {
 		this.x += x; this.y += y; this.z += z;
 		return this;
@@ -218,6 +219,7 @@ class V3 {
 	function add(v:number[]) : V3 {return this.add(v[0], v[1], v[2]);}
 	function add(v:Float32Array) : V3 {return this.add(v[0], v[1], v[2]);}
 
+	// this = this - v
 	function sub(x:number, y:number, z:number) : V3 {
 		this.x -= x; this.y -= y; this.z -= z;
 		return this;
@@ -226,6 +228,7 @@ class V3 {
 	function sub(v:number[]) : V3 {return this.sub(v[0], v[1], v[2]);}
 	function sub(v:Float32Array) : V3 {return this.sub(v[0], v[1], v[2]);}
 
+	// this = this * v (for each element)
 	function mul(x:number, y:number, z:number) : V3 {
 		this.x *= x; this.y *= y; this.z *= z;
 		return this;
@@ -234,6 +237,7 @@ class V3 {
 	function mul(v:number[]) : V3 {return this.mul(v[0], v[1], v[2]);}
 	function mul(v:Float32Array) : V3 {return this.mul(v[0], v[1], v[2]);}
 
+	// this = this * s
 	function mul(s:number) : V3 {
 		this.x *= s;
 		this.y *= s;
@@ -241,10 +245,12 @@ class V3 {
 		return this;
 	}
 
+	// this = -this
 	function neg() : V3 {
 		return this.mul(-1);
 	}
 
+	// this = normalize(this)
 	function normalize() : V3 {
 		var l = this.len();
 		if (l > 0) {
@@ -254,6 +260,7 @@ class V3 {
 		}
 	}
 
+	// this = v0 x v1
 	function cross(v0:V3, v1:V3) : V3 {
 		var x0 = v0.x, y0 = v0.y, z0 = v0.z;
 		var x1 = v1.x, y1 = v1.y, z1 = v1.z;
@@ -263,23 +270,28 @@ class V3 {
 		return this;
 	}
 
+	// return this . v
 	function dot(v:V3) : number {
 	    return this.x * v.x + this.y * v.y + this.z * v.z;
 	}
 
+	// return len(this)
 	function len() : number {
 		return Math.sqrt(this.len2());
 	}
 
+	// return len(this)^2
 	function len2() : number {
 		var x = this.x, y = this.y, z = this.z;
 		return x * x + y * y + z * z;
 	}
 
+	// return len(this - v)
 	function dist(v:V3) : number {
 		return Math.sqrt(this.dist2(v));
 	}
 
+	// return len(this - v)^2
 	function dist2(v:V3) : number {
 		var x = v.x - this.x;
 		var y = v.y - this.y;
@@ -287,6 +299,7 @@ class V3 {
 		return x * x + y * y + z * z;
 	}
 
+	// this = (1 - ratio) * v0 + ratio *  v1
 	function lerp(v0:V3, v1:V3, ratio:number) : V3 {
 		this.x = v0.x + ratio * (v1.x - v0.x);
 		this.y = v0.y + ratio * (v1.y - v0.y);
@@ -294,6 +307,7 @@ class V3 {
 		return this;
 	}
 
+	// this = m * this
 	function transformBy(m:M33) : V3 {
 		var x = this.x, y = this.y, z = this.z;
 		this.x = m.m11 * x + m.m12 * y + m.m13 * z;
@@ -301,6 +315,8 @@ class V3 {
 		this.z = m.m31 * x + m.m32 * y + m.m33 * z;
 		return this;
 	}
+
+	// this = m * this (affine transform)
 	function transformBy(m:M44) : V3 {
 		var x = this.x, y = this.y, z = this.z;
 		this.x = m.m11 * x + m.m12 * y + m.m13 * z + m.m14;
@@ -321,7 +337,7 @@ class V4 {
 	var z = 0;
 	var w = 0;
 
-	// get array
+	// get as array
 	function array() : number[] {return [this.x, this.y, this.z, this.w];}
 
 	// constructors
@@ -334,8 +350,8 @@ class V4 {
 	// dim conversion
 	function constructor(v:V2, z:number, w:number) {this.set(v, z, w);}
 	function constructor(v:V3, w:number) {this.set(v, w);}
-	function v2() : V2 {return new V2(this);}
-	function v3() : V3 {return new V3(this);}
+	function V2() : V2 {return new V2(this);}
+	function V3() : V3 {return new V3(this);}
 	function set(v:V2, z:number, w:number): V4 {return this.set(v.x, v.y, z, w);}
 	function set(v:V3, w:number): V4 {return this.set(v.x, v.y, v.z, w);}
 
@@ -361,6 +377,7 @@ class V4 {
 			Math.abs(v.w - this.w) < eps;
 	}
 
+	// this = this + v
 	function add(x:number, y:number, z:number, w:number) : V4 {
 		this.x += x; this.y += y; this.z += z; this.w += w;
 		return this;
@@ -369,6 +386,7 @@ class V4 {
 	function add(v:number[]) : V4 {return this.add(v[0], v[1], v[2], v[3]);}
 	function add(v:Float32Array) : V4 {return this.add(v[0], v[1], v[2], v[3]);}
 
+	// this = this - v
 	function sub(x:number, y:number, z:number, w:number) : V4 {
 		this.x -= x; this.y -= y; this.z -= z; this.w -= w;
 		return this;
@@ -377,6 +395,7 @@ class V4 {
 	function sub(v:number[]) : V4 {return this.sub(v[0], v[1], v[2], v[3]);}
 	function sub(v:Float32Array) : V4 {return this.sub(v[0], v[1], v[2], v[3]);}
 
+	// this = this * v (for each element)
 	function mul(x:number, y:number, z:number, w:number) : V4 {
 		this.x *= x; this.y *= y; this.z *= z; this.w *= w;
 		return this;
@@ -385,6 +404,7 @@ class V4 {
 	function mul(v:number[]) : V4 {return this.mul(v[0], v[1], v[2], v[3]);}
 	function mul(v:Float32Array) : V4 {return this.mul(v[0], v[1], v[2], v[3]);}
 
+	// this = this * s
 	function mul(s:number) : V4 {
 		this.x *= s;
 		this.y *= s;
@@ -596,7 +616,7 @@ class M22 {
 	function setScale(v:number[]) : M22 {return this.setScale(v[0], v[1]);}
 	function setScale(v:Float32Array) : M22 {return this.setScale(v[0], v[1]);}
 
-	function setRotate(rad:number) : M22 {
+	function setRotation(rad:number) : M22 {
 		var c = Math.cos(rad), s = Math.sin(rad);
 		this.m11 = c;
 		this.m21 = s;
@@ -803,7 +823,7 @@ class M33 {
 	function setScale(v:number[]) : M33 {return this.setScale(v[0], v[1], v[2]);}
 	function setScale(v:Float32Array) : M33 {return this.setScale(v[0], v[1], v[2]);}
 
-	function setRotate(rad:number, x:number, y:number, z:number) : M33 {
+	function setRotation(rad:number, x:number, y:number, z:number) : M33 {
 		var l = Math.sqrt(x*x+y*y+z*z);
 		if (l == 0) return null;
 		var il = 1 / l;
@@ -824,13 +844,13 @@ class M33 {
 		this.m33 = z*z*_c+c;
 		return this;
 	}
-	function setRotate(rad:number, a:V3) : M33 {return this.setRotate(rad, a.x, a.y, a.z);}
-	function setRotate(rad:number, a:number[]) : M33 {return this.setRotate(rad, this.m11, this.m21, this.m31);}
-	function setRotate(rad:number, a:Float32Array) : M33 {return this.setRotate(rad, this.m11, this.m21, this.m31);}
+	function setRotation(rad:number, a:V3) : M33 {return this.setRotation(rad, a.x, a.y, a.z);}
+	function setRotation(rad:number, a:number[]) : M33 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
+	function setRotation(rad:number, a:Float32Array) : M33 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
 
-	function setRotateX(rad:number) :M33 {return this.setRotate(rad, 1,0,0);}
-	function setRotateY(rad:number) :M33 {return this.setRotate(rad, 0,1,0);}
-	function setRotateZ(rad:number) :M33 {return this.setRotate(rad, 0,0,1);}
+	function setRotateX(rad:number) :M33 {return this.setRotation(rad, 1,0,0);}
+	function setRotateY(rad:number) :M33 {return this.setRotation(rad, 0,1,0);}
+	function setRotateZ(rad:number) :M33 {return this.setRotation(rad, 0,0,1);}
 
 	override function toString() : string {
 		return "M33" + JSON.stringify(this.array());
@@ -1097,16 +1117,20 @@ class M44 {
 		return this;
 	}
 
-	function setTranslate(x:number, y:number, z:number) : M44 {
+	function setTranslation(x:number, y:number, z:number) : M44 {
 		this.setIdentity();
 		this.m14 = x;
 		this.m24 = y;
 		this.m34 = z;
 		return this;
 	}
-	function setTranslate(v:V3) : M44 {return this.setTranslate(v.x, v.y, v.z);}
-	function setTranslate(v:number[]) : M44 {return this.setTranslate(v[0], v[1], v[2]);}
-	function setTranslate(v:Float32Array) : M44 {return this.setTranslate(v[0], v[1], v[2]);}
+	function setTranslation(v:V3) : M44 {return this.setTranslation(v.x, v.y, v.z);}
+	function setTranslation(v:number[]) : M44 {return this.setTranslation(v[0], v[1], v[2]);}
+	function setTranslation(v:Float32Array) : M44 {return this.setTranslation(v[0], v[1], v[2]);}
+	static function translation(x:number, y:number, z:number) : M44 {return (new M44).setTranslation(x, y, z);}
+	static function translation(v:V3) : M44 {return (new M44).setTranslation(v);}
+	static function translation(v:number[]) : M44 {return (new M44).setTranslation(v);}
+	static function translation(v:Float32Array) : M44 {return (new M44).setTranslation(v);}
 
 	function setScale(s:number) : M44 {return this.setScale(s, s, s);}
 	function setScale(x:number, y:number, z:number) : M44 {
@@ -1120,8 +1144,12 @@ class M44 {
 	function setScale(v:V3) : M44 {return this.setScale(v.x, v.y, v.z);}
 	function setScale(v:number[]) : M44 {return this.setScale(v[0], v[1], v[2]);}
 	function setScale(v:Float32Array) : M44 {return this.setScale(v[0], v[1], v[2]);}
+	static function scale(x:number, y:number, z:number) : M44 {return (new M44).setScale(x, y, z);}
+	static function scale(v:V3) : M44 {return (new M44).setScale(v);}
+	static function scale(v:number[]) : M44 {return (new M44).setScale(v);}
+	static function scale(v:Float32Array) : M44 {return (new M44).setScale(v);}
 
-	function setRotate(rad:number, x:number, y:number, z:number) : M44 {
+	function setRotation(rad:number, x:number, y:number, z:number) : M44 {
 		var l = Math.sqrt(x*x+y*y+z*z);
 		if (l == 0) return null;
 		var il = 1 / l;
@@ -1144,13 +1172,20 @@ class M44 {
 		this.m44 = 1;
 		return this;
 	}
-	function setRotate(rad:number, a:V3) : M44 {return this.setRotate(rad, a.x, a.y, a.z);}
-	function setRotate(rad:number, a:number[]) : M44 {return this.setRotate(rad, this.m11, this.m21, this.m31);}
-	function setRotate(rad:number, a:Float32Array) : M44 {return this.setRotate(rad, this.m11, this.m21, this.m31);}
+	function setRotation(rad:number, a:V3) : M44 {return this.setRotation(rad, a.x, a.y, a.z);}
+	function setRotation(rad:number, a:number[]) : M44 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
+	function setRotation(rad:number, a:Float32Array) : M44 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
+	static function rotation(rad:number, ax:number, ay:number, az:number) : M44 {return (new M44).setRotation(rad, ax, ay, az);}
+	static function rotation(rad:number, axis:V3) : M44 {return (new M44).setRotation(rad, axis);}
+	static function rotation(rad:number, axis:number[]) : M44 {return (new M44).setRotation(rad, axis);}
+	static function rotation(rad:number, axis:Float32Array) : M44 {return (new M44).setRotation(rad, axis);}
 
-	function setRotateX(rad:number) :M44 {return this.setRotate(rad, 1,0,0);}
-	function setRotateY(rad:number) :M44 {return this.setRotate(rad, 0,1,0);}
-	function setRotateZ(rad:number) :M44 {return this.setRotate(rad, 0,0,1);}
+	function setRotationX(rad:number) : M44 {return this.setRotation(rad, 1,0,0);}
+	function setRotationY(rad:number) : M44 {return this.setRotation(rad, 0,1,0);}
+	function setRotationZ(rad:number) : M44 {return this.setRotation(rad, 0,0,1);}
+	static function rotationX(rad:number) : M44 {return (new M44).setRotationX(rad);}
+	static function rotationY(rad:number) : M44 {return (new M44).setRotationY(rad);}
+	static function rotationZ(rad:number) : M44 {return (new M44).setRotationZ(rad);}
 
 	function setFrustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
 		var a = this.array();
@@ -1165,6 +1200,7 @@ class M44 {
 		this.m21 = this.m31 = this.m41 = this.m12 = this.m32 = this.m42 = this.m14 = this.m24 = this.m44 = 0;
 		return this;
 	}
+	static function frustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return (new M44).setFrustum(l,r,b,t,n,f);}
 
 	function setOrtho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
 		var a = this.array();
@@ -1179,6 +1215,7 @@ class M44 {
 		this.m44 = 1;
 		return this;
 	}
+	static function ortho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return (new M44).setOrtho(l,r,b,t,n,f);}
 
 	override function toString() : string {
 		return "M44" + JSON.stringify(this.array());
@@ -1347,6 +1384,14 @@ class Quat {
 
 class _Main {
 	static function main(args:string[]) : void {
+		var m0 = new M44;
+        m0.setScale(0.01);
+        m0.inverse();
+        var m1 = new M44();
+        m1.setScale(100);
+
+		log m0.array();
+		log m1.array();
 	}
 }
 
