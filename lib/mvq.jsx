@@ -957,7 +957,7 @@ class M44 {
 		this.m11 = this.m22 = this.m33 = this.m44 = s;
 		this.m21 = this.m31 = this.m41 =
 		this.m12 = this.m32 = this.m42 =
-		this.m13 = this.m23 = this.m24 =
+		this.m13 = this.m23 = this.m43 =
 		this.m14 = this.m24 = this.m34 = 0;
 		return this;
 	}
