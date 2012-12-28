@@ -514,6 +514,8 @@ class M22 {
 
 	function setZero() : M22 {return this.set(0);}
 	function setIdentity() : M22 {return this.set(1);}
+	static function zero() : M22 {return new M22.setZero();}
+	static function identity() : M22 {return new M22.setIdentity();}
 
 	function set( // (CAUTION: row-major parameters)
 		m11:number, m12:number,
@@ -675,6 +677,8 @@ class M33 {
 
 	function setZero() : M33 {return this.set(0);}
 	function setIdentity() : M33 {return this.set(1);}
+	static function zero() : M33 {return new M33.setZero();}
+	static function identity() : M33 {return new M33.setIdentity();}
 
 	function set( // (CAUTION: row-major order parameters)
 		m11:number, m12:number, m13:number,
@@ -912,6 +916,8 @@ class M44 {
 
 	function setZero() : M44 {return this.set(0);}
 	function setIdentity() : M44 {return this.set(1);}
+	static function zero() : M44 {return new M44.setZero();}
+	static function identity() : M44 {return new M44.setIdentity();}
 
 	function set( // (CAUTION: row-major order parameters)
 		m11:number, m12:number, m13:number, m14:number,
@@ -1127,10 +1133,10 @@ class M44 {
 	function setTranslation(v:V3) : M44 {return this.setTranslation(v.x, v.y, v.z);}
 	function setTranslation(v:number[]) : M44 {return this.setTranslation(v[0], v[1], v[2]);}
 	function setTranslation(v:Float32Array) : M44 {return this.setTranslation(v[0], v[1], v[2]);}
-	static function translation(x:number, y:number, z:number) : M44 {return (new M44).setTranslation(x, y, z);}
-	static function translation(v:V3) : M44 {return (new M44).setTranslation(v);}
-	static function translation(v:number[]) : M44 {return (new M44).setTranslation(v);}
-	static function translation(v:Float32Array) : M44 {return (new M44).setTranslation(v);}
+	static function translation(x:number, y:number, z:number) : M44 {return new M44.setTranslation(x, y, z);}
+	static function translation(v:V3) : M44 {return new M44.setTranslation(v);}
+	static function translation(v:number[]) : M44 {return new M44.setTranslation(v);}
+	static function translation(v:Float32Array) : M44 {return new M44.setTranslation(v);}
 
 	function setScale(s:number) : M44 {return this.setScale(s, s, s);}
 	function setScale(x:number, y:number, z:number) : M44 {
@@ -1144,10 +1150,10 @@ class M44 {
 	function setScale(v:V3) : M44 {return this.setScale(v.x, v.y, v.z);}
 	function setScale(v:number[]) : M44 {return this.setScale(v[0], v[1], v[2]);}
 	function setScale(v:Float32Array) : M44 {return this.setScale(v[0], v[1], v[2]);}
-	static function scale(x:number, y:number, z:number) : M44 {return (new M44).setScale(x, y, z);}
-	static function scale(v:V3) : M44 {return (new M44).setScale(v);}
-	static function scale(v:number[]) : M44 {return (new M44).setScale(v);}
-	static function scale(v:Float32Array) : M44 {return (new M44).setScale(v);}
+	static function scale(x:number, y:number, z:number) : M44 {return new M44.setScale(x, y, z);}
+	static function scale(v:V3) : M44 {return new M44.setScale(v);}
+	static function scale(v:number[]) : M44 {return new M44.setScale(v);}
+	static function scale(v:Float32Array) : M44 {return new M44.setScale(v);}
 
 	function setRotation(rad:number, x:number, y:number, z:number) : M44 {
 		var l = Math.sqrt(x*x+y*y+z*z);
@@ -1175,17 +1181,17 @@ class M44 {
 	function setRotation(rad:number, a:V3) : M44 {return this.setRotation(rad, a.x, a.y, a.z);}
 	function setRotation(rad:number, a:number[]) : M44 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
 	function setRotation(rad:number, a:Float32Array) : M44 {return this.setRotation(rad, this.m11, this.m21, this.m31);}
-	static function rotation(rad:number, ax:number, ay:number, az:number) : M44 {return (new M44).setRotation(rad, ax, ay, az);}
-	static function rotation(rad:number, axis:V3) : M44 {return (new M44).setRotation(rad, axis);}
-	static function rotation(rad:number, axis:number[]) : M44 {return (new M44).setRotation(rad, axis);}
-	static function rotation(rad:number, axis:Float32Array) : M44 {return (new M44).setRotation(rad, axis);}
+	static function rotation(rad:number, ax:number, ay:number, az:number) : M44 {return new M44.setRotation(rad, ax, ay, az);}
+	static function rotation(rad:number, axis:V3) : M44 {return new M44.setRotation(rad, axis);}
+	static function rotation(rad:number, axis:number[]) : M44 {return new M44.setRotation(rad, axis);}
+	static function rotation(rad:number, axis:Float32Array) : M44 {return new M44.setRotation(rad, axis);}
 
 	function setRotationX(rad:number) : M44 {return this.setRotation(rad, 1,0,0);}
 	function setRotationY(rad:number) : M44 {return this.setRotation(rad, 0,1,0);}
 	function setRotationZ(rad:number) : M44 {return this.setRotation(rad, 0,0,1);}
-	static function rotationX(rad:number) : M44 {return (new M44).setRotationX(rad);}
-	static function rotationY(rad:number) : M44 {return (new M44).setRotationY(rad);}
-	static function rotationZ(rad:number) : M44 {return (new M44).setRotationZ(rad);}
+	static function rotationX(rad:number) : M44 {return new M44.setRotationX(rad);}
+	static function rotationY(rad:number) : M44 {return new M44.setRotationY(rad);}
+	static function rotationZ(rad:number) : M44 {return new M44.setRotationZ(rad);}
 
 	function setFrustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
 		var a = this.array();
@@ -1200,7 +1206,7 @@ class M44 {
 		this.m21 = this.m31 = this.m41 = this.m12 = this.m32 = this.m42 = this.m14 = this.m24 = this.m44 = 0;
 		return this;
 	}
-	static function frustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return (new M44).setFrustum(l,r,b,t,n,f);}
+	static function frustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return new M44.setFrustum(l,r,b,t,n,f);}
 
 	function setOrtho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
 		var a = this.array();
@@ -1215,7 +1221,7 @@ class M44 {
 		this.m44 = 1;
 		return this;
 	}
-	static function ortho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return (new M44).setOrtho(l,r,b,t,n,f);}
+	static function ortho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return new M44.setOrtho(l,r,b,t,n,f);}
 
 	override function toString() : string {
 		return "M44" + JSON.stringify(this.array());
@@ -1240,6 +1246,8 @@ class Quat {
 
 	function setZero() : Quat {return this.set(0, 0, 0, 0);}
 	function setIdentity() : Quat {return this.set(1, 0, 0, 0);}
+	static function zero() : Quat {return new Quat.setZero();}
+	static function identity() : Quat {return new Quat.setIdentity();}
 
 	function set(w:number, x:number, y:number, z:number) : Quat {
 		this.w = w; this.x = x; this.y = y; this.z = z;
@@ -1384,14 +1392,6 @@ class Quat {
 
 class _Main {
 	static function main(args:string[]) : void {
-		var m0 = new M44;
-        m0.setScale(0.01);
-        m0.inverse();
-        var m1 = new M44();
-        m1.setScale(100);
-
-		log m0.array();
-		log m1.array();
 	}
 }
 
