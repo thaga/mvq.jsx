@@ -165,7 +165,7 @@ class _Test extends TestMVQ.<M44> {
             [1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3], m0);
     }
 
-    function todo_testInverse() : void {
+    function testInverse() : void {
         var m0 = new M44([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
         this.expect(m0.inverse()).toBe(null);
