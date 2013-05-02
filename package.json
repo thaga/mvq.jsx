@@ -1,0 +1,22 @@
+{
+  "name":        "mvq.jsx",
+  "version":     "0.0.1",
+  "description": "Matrix, Vector, and Quaternion for JSX",
+  "keywords": ["jsx", "matrix", "vector", "quaternion" ],
+  "repository" : "git://github.com/thaga/mvq.jsx.git",
+  "bugs" : { "url" : "https://github.com/thaga/mvq.jsx/issues" },
+  "author": {
+        "name":  "thaga",
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+      "jsx": "0.9.x"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts" : {
+  }
+}

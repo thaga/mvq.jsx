@@ -7,3 +7,5 @@ test:
 
 test-optimized:
 	JSX_OPTS=--release prove
+
+test-all: test test-optimized
