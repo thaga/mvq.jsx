@@ -566,6 +566,11 @@ class M22 {
 		this.m11 -= m.m11; this.m21 -= m.m21; this.m12 -= m.m12; this.m22 -= m.m22;
 		return this;
 	}
+	function mul(s:number) : M22 {
+		this.m11 *= s; this.m21 *= s;
+		this.m12 *= s; this.m22 *= s;
+		return this;
+	}
 	function mul(m:M22) : M22 {
 		return this.mul(this.clone(), m);
 	}
@@ -746,6 +751,12 @@ class M33 {
 		this.m11 -= m.m11; this.m21 -= m.m21; this.m31 -= m.m31;
 		this.m12 -= m.m12; this.m22 -= m.m22; this.m32 -= m.m32;
 		this.m13 -= m.m13; this.m23 -= m.m23; this.m33 -= m.m33;
+		return this;
+	}
+	function mul(s:number) : M33 {
+		this.m11 *= s; this.m21 *= s; this.m31 *= s;
+		this.m12 *= s; this.m22 *= s; this.m32 *= s;
+		this.m13 *= s; this.m23 *= s; this.m33 *= s;
 		return this;
 	}
 	function mul(m:M33) : M33 {
@@ -1003,6 +1014,13 @@ class M44 {
 		this.m12 -= m.m12; this.m22 -= m.m22; this.m32 -= m.m32; this.m42 -= m.m42;
 		this.m13 -= m.m13; this.m23 -= m.m23; this.m33 -= m.m33; this.m43 -= m.m43;
 		this.m14 -= m.m14; this.m24 -= m.m24; this.m34 -= m.m34; this.m44 -= m.m44;
+		return this;
+	}
+	function mul(s:number) : M44 {
+		this.m11 *= s; this.m21 *= s; this.m31 *= s; this.m41 *= s;
+		this.m12 *= s; this.m22 *= s; this.m32 *= s; this.m42 *= s;
+		this.m13 *= s; this.m23 *= s; this.m33 *= s; this.m43 *= s;
+		this.m14 *= s; this.m24 *= s; this.m34 *= s; this.m44 *= s;
 		return this;
 	}
 	function mul(m:M44) : M44 {
