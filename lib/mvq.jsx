@@ -1,4 +1,3 @@
-import 'js/web.jsx';
 
 class MVQ {
 	static const EQUAL_EPSILON = 0.000001;

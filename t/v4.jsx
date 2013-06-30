@@ -1,8 +1,6 @@
 // tests are borrowed from Google Closure Library
 // https://developers.google.com/closure/library/
 
-import "js/web.jsx";
-
 import "../lib/mvq.jsx";
 
 import "./lib/test-mvq.jsx";
