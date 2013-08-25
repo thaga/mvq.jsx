@@ -1166,6 +1166,7 @@ class M44 {
 	function setScale(v:V3) : M44 {return this.setScale(v.x, v.y, v.z);}
 	function setScale(v:number[]) : M44 {return this.setScale(v[0], v[1], v[2]);}
 	function setScale(v:Float32Array) : M44 {return this.setScale(v[0], v[1], v[2]);}
+	static function scale(s:number) : M44 {return new M44().setScale(s);}
 	static function scale(x:number, y:number, z:number) : M44 {return new M44().setScale(x, y, z);}
 	static function scale(v:V3) : M44 {return new M44().setScale(v);}
 	static function scale(v:number[]) : M44 {return new M44().setScale(v);}
