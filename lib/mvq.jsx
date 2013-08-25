@@ -844,7 +844,6 @@ class M33 {
 		x *= il;
 		y *= il;
 		z *= il;
-		var a = this.array();
 		var c = Math.cos(rad), s = Math.sin(rad);
 		var _c = 1-c;
 		this.m11 = x*x*_c+c;
@@ -1179,7 +1178,6 @@ class M44 {
 		x *= il;
 		y *= il;
 		z *= il;
-		var a = this.array();
 		var c = Math.cos(rad), s = Math.sin(rad);
 		var _c = 1-c;
 		this.m11 = x*x*_c+c;
@@ -1211,7 +1209,6 @@ class M44 {
 	static function rotationZ(rad:number) : M44 {return new M44().setRotationZ(rad);}
 
 	function setFrustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
-		var a = this.array();
 		var rl = r-l, tb = t-b, fn = f-n;
 		this.m11 = 2 * n / rl;
 		this.m22 = 2 * n / tb;
@@ -1226,7 +1223,6 @@ class M44 {
 	static function frustum(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {return new M44().setFrustum(l,r,b,t,n,f);}
 
 	function setOrtho(l:number, r:number, b:number, t:number, n:number, f:number) : M44 {
-		var a = this.array();
 		var rl = r-l, tb = t-b, fn = f-n;
 		this.m11 = 2 / rl;
 		this.m22 = 2 / tb;
