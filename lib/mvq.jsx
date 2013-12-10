@@ -95,9 +95,14 @@ class V2 {
 
 	// this = normalize(this)
 	function normalize() : V2 {
+		return this.normalize(1);
+	}
+
+	// this = normalize(this) * n
+	function normalize(n:number) : V2 {
 		var l = this.len();
 		if (l > 0) {
-			return this.mul(1 / l);
+			return this.mul(n / l);
 		} else {
 			return this;
 		}
@@ -251,9 +256,14 @@ class V3 {
 
 	// this = normalize(this)
 	function normalize() : V3 {
+		return this.normalize(1);
+	}
+
+	// this = normalize(this) * n
+	function normalize(n:number) : V3 {
 		var l = this.len();
 		if (l > 0) {
-			return this.mul(1 / l);
+			return this.mul(n / l);
 		} else {
 			return this;
 		}
@@ -417,9 +427,13 @@ class V4 {
 	}
 
 	function normalize() : V4 {
+		return this.normalize(1);
+	}
+
+	function normalize(n:number) : V4 {
 		var l = this.len();
 		if (l > 0) {
-			return this.mul(1 / l);
+			return this.mul(n / l);
 		} else {
 			return this;
 		}
